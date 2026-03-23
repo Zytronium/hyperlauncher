@@ -19,6 +19,7 @@ function launchApp(app: App) {
 }
 
 // TODO: Allow user to create folders and add custom apps
+
 export default function Home() {
     const [apps, setApps] = useState<App[]>([]);
     const [loading, setLoading] = useState(true);
@@ -51,10 +52,13 @@ export default function Home() {
                             className="aspect-square w-32 cursor-pointer"
                             onClick={() => launchApp(app)}
                         >
-                            <div style={{ filter: 'drop-shadow(0 0 20px rgb(6 182 212 / 0.6))' }} className="w-full h-full">
+                            <div style={{ filter: 'drop-shadow(0 0 20px rgb(6 182 212 / 0.6))' }}
+                                 className="w-full h-full"
+                                 title={app.name}
+                            >
                                 <div
                                     style={{
-                                        clipPath: 'url(#squircle)',
+                                        clipPath: !app.image ? 'url(#squircle)' : undefined,
                                         backgroundImage: app.image ? `url(file://${app.image})` : undefined,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'center',
