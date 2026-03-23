@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hyperlauncher
 
-## Getting Started
+The Linux app launcher of the future.
 
-First, run the development server:
+Designed for use with the Copilot key as an alternate app launcher,
+this fullscreen app launcher can display all apps detected on the 
+system or just the apps you want there.
 
+This app supports opening and closing via a custom keybind, i.e. the
+Copilot key on some newer laptops. Here's a script that allows that
+to work (Designed for KDE Plasma 6 on CachyOS)
+
+> IMPORTANT: `APP_CMD` and (maybe) `APP_MATCH` will need to be edited to work on your computer.
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+#!/bin/bash
+
+APP_CMD="/home/null/WebstormProjects/hyperlauncher/dist/Hyperlauncher-0.1.0.AppImage"
+APP_MATCH="Hyperlauncher-0.1.0.AppImage"
+
+# Find the main Electron process
+MAIN_PID=$(pgrep -f "\.mount_Hyperl" | while read pid; do
+    cmdline=$(cat /proc/$pid/cmdline 2>/dev/null | tr '\0' ' ')
+    if [[ "$cmdline" != *"--type="* ]]; then
+        echo "$pid"
+        break
+    fi
+done)
+
+if [ -n "$MAIN_PID" ]; then
+    kill -USR1 "$MAIN_PID"
+elif ! pgrep -f "$APP_MATCH" > /dev/null; then
+    "$APP_CMD" &
+fi
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

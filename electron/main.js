@@ -1,4 +1,5 @@
-const { app, BrowserWindow, ipcMain, screen, protocol } = require('electron');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { app, BrowserWindow, ipcMain, screen, protocol, globalShortcut } = require('electron');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require('path');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -6,24 +7,12 @@ const { spawn } = require('child_process');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs');
 
-app.whenReady().then(() => {
-    protocol.interceptFileProtocol('file', (request, callback) => {
-        let filePath = decodeURIComponent(request.url.replace('file://', ''));
-
-        // If the file exists at the absolute path, use it as-is
-        if (fs.existsSync(filePath)) {
-            callback({ path: filePath });
-        } else {
-            // Otherwise assume it's a Next.js asset and map it to out/
-            callback({ path: path.join(__dirname, '../out', filePath) });
-        }
-    });
-});
+let win;
 
 function createWindow() {
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width,
         height,
         x: 0,
@@ -48,6 +37,30 @@ function createWindow() {
     }
 }
 
+app.whenReady().then(() => {
+    protocol.interceptFileProtocol('file', (request, callback) => {
+        let filePath = decodeURIComponent(request.url.replace('file://', ''));
+        if (fs.existsSync(filePath)) {
+            callback({ path: filePath });
+        } else {
+            callback({ path: path.join(__dirname, '../out', filePath) });
+        }
+    });
+
+    process.on('SIGUSR1', () => {
+        if (win) {
+            if (win.isVisible()) {
+                win.hide();
+            } else {
+                win.show();
+                win.focus();
+            }
+        }
+    });
+
+    createWindow();
+});
+
 ipcMain.on('close-window', () => app.quit());
 
 ipcMain.on('launch-app', (_event, payload) => {
@@ -59,5 +72,5 @@ ipcMain.on('launch-app', (_event, payload) => {
     }
 });
 
-app.whenReady().then(createWindow);
 app.on('window-all-closed', () => app.quit());
+app.on('will-quit', () => globalShortcut.unregisterAll());
