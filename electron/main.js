@@ -6,6 +6,8 @@ const path = require('path');
 const { spawn } = require('child_process');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { scanApps } = require('./appScanner');
 
 let win;
 
@@ -56,6 +58,10 @@ app.whenReady().then(() => {
                 win.focus();
             }
         }
+    });
+
+    ipcMain.handle('get-apps', async () => {
+        return scanApps();
     });
 
     createWindow();
