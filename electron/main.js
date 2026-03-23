@@ -1,6 +1,9 @@
 const { app, BrowserWindow, ipcMain, screen, protocol } = require('electron');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { spawn } = require('child_process');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs');
 
 app.whenReady().then(() => {
@@ -15,8 +18,6 @@ app.whenReady().then(() => {
             callback({ path: path.join(__dirname, '../out', filePath) });
         }
     });
-
-    createWindow();
 });
 
 function createWindow() {
