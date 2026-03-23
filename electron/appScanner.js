@@ -9,6 +9,7 @@ const DESKTOP_DIRS = [
     '/var/lib/flatpak/exports/share/applications',
     path.join(os.homedir(), '.local/share/flatpak/exports/share/applications'),
     '/var/lib/snapd/desktop/applications',
+    path.join(os.homedir(), 'Desktop'),
 ];
 
 const ICON_DIRS = [
