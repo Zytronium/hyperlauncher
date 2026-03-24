@@ -69,6 +69,10 @@ app.whenReady().then(() => {
 
 ipcMain.on('close-window', () => app.quit());
 
+ipcMain.on('hide-window', () => {
+    if (win) win.hide();
+});
+
 ipcMain.on('launch-app', (_event, payload) => {
     if (payload.cmd) {
         const [bin, ...args] = payload.cmd.split(' ');

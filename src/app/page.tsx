@@ -16,6 +16,7 @@ function launchApp(app: App) {
     } else if (app.exec_path) {
         window.electron.launch({ path: app.exec_path });
     }
+    window.electron.hideWindow();
 }
 
 // TODO: Allow user to create folders and add custom apps
