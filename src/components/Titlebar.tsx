@@ -13,7 +13,7 @@ export default function TitleBar() {
     };
 
     return (
-        <div className="flex items-center justify-between w-full px-4 py-2 bg-zinc-900 border-b border-zinc-800">
+        <div className="flex items-center justify-between w-full px-4 py-2 bg-slate-950 border-b border-slate-900">
             <div className="flex items-center gap-2">
                 <Image src="/logo.png" alt="Hyperlauncher" width={24} height={24} />
                 <span style={{ fontFamily: 'Apex' }} className="text-white text-sm font-bold tracking-widest">
@@ -22,7 +22,7 @@ export default function TitleBar() {
             </div>
             <button
                 onClick={handleClose}
-                className="text-zinc-400 rounded-full hover:text-white hover:bg-red-600 transition-colors duration-150 w-6 h-6 flex items-center justify-center text-lg"
+                className="text-slate-500 rounded-full hover:text-slate-300 hover:bg-red-700 transition-colors duration-150 w-6 h-6 flex items-center justify-center text-lg"
             >
                 <CircleX />
             </button>

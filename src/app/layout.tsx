@@ -17,7 +17,7 @@ export default function RootLayout({
       lang="en"
       className="h-full antialiased"
     >
-      <body className="min-h-full flex flex-col bg-slate-800 text-white">
+      <body className="min-h-full flex flex-col bg-slate-950 text-white">
       <Titlebar />
         {children}
       </body>

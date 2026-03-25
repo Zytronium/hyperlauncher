@@ -19,6 +19,7 @@ function launchApp(app: App) {
     window.electron.hideWindow();
 }
 
+// TODO: Allow user to create multiple pages of different app sets
 // TODO: Allow user to create folders
 // TODO: Allow user to add custom apps
 // TODO: Allow user to edit app icons
