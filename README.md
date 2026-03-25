@@ -2,6 +2,9 @@
 
 The Linux app launcher of the future.
 
+> Note: This app is designed to work for me specifically and may have features that only work on my machine. However,
+it could still work on other machines just as well. I don't hardcode usernames or anything like that.
+
 Designed for use with the Copilot key as an alternate app launcher,
 this fullscreen app launcher can display all apps detected on the 
 system or just the apps you want there.
