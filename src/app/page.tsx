@@ -19,7 +19,10 @@ function launchApp(app: App) {
     window.electron.hideWindow();
 }
 
-// TODO: Allow user to create folders and add custom apps
+// TODO: Allow user to create folders
+// TODO: Allow user to add custom apps
+// TODO: Allow user to edit app icons
+// TODO: Show widget for app meta info somehow (i.e. on hover, right click, or other method)
 
 export default function Home() {
     const [apps, setApps] = useState<App[]>([]);

@@ -14,6 +14,7 @@ const DESKTOP_DIRS = [
 
 const ICON_DIRS = [
     path.join(os.homedir(), '.local/share/icons'),
+    path.join(os.homedir(), '.local/share/icons/hicolor'),
     '/usr/share/icons/hicolor',
     '/usr/share/icons/Papirus',
     '/usr/share/icons',
@@ -55,8 +56,13 @@ function resolveIcon(iconName) {
         return undefined;
 
     // Already an absolute path
-    if (path.isAbsolute(iconName) && fs.existsSync(iconName))
-        return iconName;
+    if (path.isAbsolute(iconName)) {
+        if (fs.existsSync(iconName)) return iconName;
+        for (const ext of ICON_EXTS) {
+            if (fs.existsSync(iconName + ext)) return iconName + ext;
+        }
+        return undefined;
+    }
 
     // Search icon theme dirs
     for (const dir of ICON_DIRS) {
